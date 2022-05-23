@@ -6,23 +6,44 @@ namespace Modul5
     {
         static void Main(string[] args)
         {
-            string[] favcolor = new string[3];
-            for(int i = 0;  i < favcolor.Length; i++)
+            int[] arr = new int[5];
+            int temp;
+
+            arr = GetArrayFromConsole();
+            for(int i = 0; i < arr.Length; i++)
             {
-                favcolor[i] = ShowColor();
+                for (int k = 0; k < arr.Length; k++)
+                {
+                    if( arr[i] < arr[k])
+                    {
+                        temp = arr[i];
+                        arr[i] = arr[k];
+                        arr[k] = temp;
+                    }
+                }
             }
 
-
-            foreach(var item in favcolor)
+            foreach(int item in arr)
             {
-                Console.WriteLine(item);
+                Console.Write(item + " ");
             }
 
 
             Console.ReadKey();
         }
 
-        static string ShowColor()
+        static int[] GetArrayFromConsole()
+        {
+            var result = new int[5];
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.WriteLine("Введите элемент массива номер {0}", i + 1);
+                result[i] = int.Parse(Console.ReadLine());
+            }
+            return result;
+        }
+
+            static string ShowColor()
         {
             Console.WriteLine("Напишите свой любимый цвет на английском с маленькой буквы");
             var color = Console.ReadLine();
@@ -57,6 +78,7 @@ namespace Modul5
             }
             return color;
         }
+
 
     }
 }
