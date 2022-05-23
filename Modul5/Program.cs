@@ -6,20 +6,57 @@ namespace Modul5
     {
         static void Main(string[] args)
         {
-            (string Name, string[] Dishes) User;
-
-            Console.WriteLine("Ведеите имя:");
-            User.Name = Console.ReadLine();
-
-            User.Dishes = new string[5];
-            for (int i = 1; i < 5; i++)
+            string[] favcolor = new string[3];
+            for(int i = 0;  i < favcolor.Length; i++)
             {
-                Console.WriteLine("Введите любимое блюдо № {0}:", i);
-                User.Dishes[i] = Console.ReadLine();
+                favcolor[i] = ShowColor();
+            }
+
+
+            foreach(var item in favcolor)
+            {
+                Console.WriteLine(item);
             }
 
 
             Console.ReadKey();
         }
+
+        static string ShowColor()
+        {
+            Console.WriteLine("Напишите свой любимый цвет на английском с маленькой буквы");
+            var color = Console.ReadLine();
+
+            switch (color)
+            {
+                case "red":
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Black;
+
+                    Console.WriteLine("Your color is red!");
+                    break;
+
+                case "green":
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+
+                    Console.WriteLine("Your color is green!");
+                    break;
+                case "cyan":
+                    Console.BackgroundColor = ConsoleColor.Cyan;
+                    Console.ForegroundColor = ConsoleColor.Black;
+
+                    Console.WriteLine("Your color is cyan!");
+                    break;
+                default:
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Red;
+
+                    Console.WriteLine("Your color is yellow!");
+                    break;
+            }
+            return color;
+        }
+
     }
 }
