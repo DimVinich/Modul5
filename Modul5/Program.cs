@@ -6,28 +6,18 @@ namespace Modul5
     {
         static void Main(string[] args)
         {
-            int[] arr = new int[5];
-            int temp;
+            (string name, int age) anketa;
 
-            arr = GetArrayFromConsole();
-            for(int i = 0; i < arr.Length; i++)
+            Console.Write("Введите имя: ");
+            anketa.name = Console.ReadLine();
+            Console.Write("Введите возраст с цифрами: ");
+            anketa.age = Convert.ToInt32(Console.ReadLine());
+
+            var favcolor = new string[3];
+            for(int i = 0; i < favcolor.Length; i++)
             {
-                for (int k = 0; k < arr.Length; k++)
-                {
-                    if( arr[i] < arr[k])
-                    {
-                        temp = arr[i];
-                        arr[i] = arr[k];
-                        arr[k] = temp;
-                    }
-                }
+                favcolor[i] = ShowColor(anketa.name);
             }
-
-            foreach(int item in arr)
-            {
-                Console.Write(item + " ");
-            }
-
 
             Console.ReadKey();
         }
@@ -35,15 +25,37 @@ namespace Modul5
         static int[] GetArrayFromConsole()
         {
             var result = new int[5];
+            int temp;
+
             for (int i = 0; i < result.Length; i++)
             {
                 Console.WriteLine("Введите элемент массива номер {0}", i + 1);
                 result[i] = int.Parse(Console.ReadLine());
             }
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                for (int k = 0; k < result.Length; k++)
+                {
+                    if (result[i] < result[k])
+                    {
+                        temp = result[i];
+                        result[i] = result[k];
+                        result[k] = temp;
+                    }
+                }
+            }
+
+            foreach (int item in result)
+            {
+                Console.Write(item + " ");
+            }
+
+
             return result;
         }
 
-            static string ShowColor()
+        static string ShowColor( string username)
         {
             Console.WriteLine("Напишите свой любимый цвет на английском с маленькой буквы");
             var color = Console.ReadLine();
