@@ -16,7 +16,7 @@ namespace Modul5
             var favcolor = new string[3];
             for(int i = 0; i < favcolor.Length; i++)
             {
-                favcolor[i] = ShowColor(anketa.name);
+                favcolor[i] = ShowColor(anketa.name, anketa.age);
             }
 
             Console.ReadKey();
@@ -55,9 +55,9 @@ namespace Modul5
             return result;
         }
 
-        static string ShowColor( string username)
+        static string ShowColor( string username, int userage)
         {
-            Console.WriteLine("{0} Напишите свой любимый цвет на английском с маленькой буквы", username );
+            Console.WriteLine("{0}, {1} лет \nНапишите свой любимый цвет на английском с маленькой буквы", username, userage);
             var color = Console.ReadLine();
 
             switch (color)
