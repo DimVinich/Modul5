@@ -5,7 +5,7 @@ namespace Modul5
     class Program
     {
         static void Main(string[] args)
-        {
+        {  
             Console.WriteLine("Напишите что-то");
             var str = Console.ReadLine();
 
@@ -27,7 +27,7 @@ namespace Modul5
 
             Console.BackgroundColor = (ConsoleColor)deep;
             Console.WriteLine("..." + modif);
-
+             
             if (deep > 1)
             {
                 Echo(modif, deep - 1);
