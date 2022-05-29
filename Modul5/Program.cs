@@ -5,16 +5,45 @@ namespace Modul5
     class Program
     {
         static void Main(string[] args)
-        {  
-            Console.WriteLine("Напишите что-то");
-            var str = Console.ReadLine();
+        {
 
-            Console.WriteLine("Укажите глубину эха");
-            var deep = int.Parse(Console.ReadLine());
-
-            Echo(str, deep);
+            Console.WriteLine(PowerUp(2, 3));
 
             Console.ReadKey();
+        }
+
+        private static int PowerUp(int N, byte pow)
+        {
+            if (pow == 0)
+            {
+                return 1;
+            }
+            else if (pow == 1)
+            {
+                return N;
+            }
+
+            int temp;
+            temp = N * N;
+            --pow;
+            if (pow > 1)
+            {
+                temp = PowerUp(temp, pow);
+            }
+
+            return temp;
+        }
+
+        static decimal Factorial(int x)
+        {
+            if (x == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return x * Factorial(x - 1);
+            }
         }
 
         static void Echo(string saidworld, int deep)
@@ -38,7 +67,7 @@ namespace Modul5
         {
             if(needsort)
             {
-                arr = SortArray(arr);
+               // arr = SortArray(arr);
             }
 
             foreach (int item in arr)
