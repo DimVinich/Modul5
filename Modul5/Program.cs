@@ -6,24 +6,26 @@ namespace Modul5
     {
         static void Main(string[] args)
         {
-            (string name, int age) anketa;
-
-            Console.Write("Введите имя: ");
-            anketa.name = Console.ReadLine();
-            Console.Write("Введите возраст с цифрами: ");
-            anketa.age = Convert.ToInt32(Console.ReadLine());
-
-            var favcolor = new string[3];
-            for (int i = 0; i < favcolor.Length; i++)
-            {
-                favcolor[i] = ShowColor(anketa.name, anketa.age);
-            }
-
+            var array = GetArrayFromConsole(10);
+            ShowArray(array, true);
 
             Console.ReadKey();
         }
 
-        static int[] SortArray(int[] arr)       //      Сотртирует массив и выдаёт его на экран. выдачи пока коммент
+        static void ShowArray(int[] arr, bool needsort = false)  // Выводим массив на экран , если нужно сортирует
+        {
+            if(needsort)
+            {
+                arr = SortArray(arr);
+            }
+
+            foreach (int item in arr)
+            {
+                Console.Write(item + " ");
+            }
+        }
+
+        static int[] SortArray(int[] arr)                  //  Сотртирует массив 
         {
             int temp;
             for (int i = 0; i < arr.Length; i++)
@@ -39,18 +41,12 @@ namespace Modul5
                 }
             }
 
-            //  = ну и вывод пока сюда перенесём
-            //foreach (int item in arr)
-            //{
-            //    Console.Write(item + " ");
-            //}
-
             return arr;
         }
 
-        static int[] GetArrayFromConsole()          //  Считвает массив с консоли
+        static int[] GetArrayFromConsole(int num = 5)      //  Считвает массив с консоли
         {
-            var result = new int[5];
+            var result = new int[num];
 
             for (int i = 0; i < result.Length; i++)
             {
@@ -61,7 +57,32 @@ namespace Modul5
             return result;
         }
 
-        static string ShowColor( string username, int userage)
+        static void SortComplexArray(int[,] arr)
+        {
+            int temp;
+            for (int i = 0; i <= arr.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= arr.GetUpperBound(1); j++)
+                    for (int k = j + 1; k <= arr.GetUpperBound(1); k++)
+                        if (arr[i, j] > arr[i, k])
+                        {
+                            temp = arr[i, k];
+                            arr[i, k] = arr[i, j];
+                            arr[i, j] = temp;
+                        }
+            }
+        }       //  Сортитовка двумерного массива
+
+        static void ShowColors(string username = "Jane", params string[] favcolors)  // Выдает цвета через  через перебор forech
+        {
+            Console.WriteLine("Ваши любимые цвета:");
+            foreach (var color in favcolors)
+            {
+                Console.WriteLine(color);
+            }
+        }
+
+        static string ShowColor( string username, int userage)  // Выдает цвета через  через switch
         {
             Console.WriteLine("{0}, {1} лет \nНапишите свой любимый цвет на английском с маленькой буквы", username, userage);
             var color = Console.ReadLine();
@@ -93,9 +114,9 @@ namespace Modul5
 
                     Console.WriteLine("Your color is yellow!");
                     break;
-            }
+            }       // Разбор по цвету с выдачей на экран
             return color;
-        }
+        }      
 
     }
 }
