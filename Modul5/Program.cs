@@ -6,14 +6,32 @@ namespace Modul5
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Напишите что-то");
+            var str = Console.ReadLine();
 
-            //int num = 6;
-            //var array = GetArrayFromConsole(ref num);
-            //ShowArray(array, true);
+            Console.WriteLine("Укажите глубину эха");
+            var deep = int.Parse(Console.ReadLine());
+
+            Echo(str, deep);
 
             Console.ReadKey();
         }
 
+        static void Echo(string saidworld, int deep)
+        {
+            var modif = saidworld;
+            if (modif.Length > 2)
+            {
+                modif = modif.Remove(0, 2);
+            }
+
+            Console.WriteLine("..." + modif);
+
+            if (deep > 1)
+            {
+                Echo(modif, deep - 1);
+            }
+        }
 
         static void ShowArray(int[] arr, bool needsort = false)  // Выводим массив на экран , если нужно сортирует
         {
@@ -28,7 +46,7 @@ namespace Modul5
             }
         }
 
-        static void SortArray(in int[] arr, out int[] arrasc, out int[] arrdesc)                  //  Сотртирует массив  и по возрастанию и по убыванию
+        static void SortArray(in int[] arr, out int[] arrasc, out int[] arrdesc)       //  Сотртирует массив  и по возрастанию и по убыванию
         {
             arrasc = SortArrayAsc(arr);
             arrdesc = SortArrayDesc(arr);
@@ -72,7 +90,6 @@ namespace Modul5
 
             return arr;
         }
-
 
         static int[] GetArrayFromConsole(ref int num )      //  Считвает массив с консоли
         {
