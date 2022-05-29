@@ -6,11 +6,14 @@ namespace Modul5
     {
         static void Main(string[] args)
         {
-            var array = GetArrayFromConsole(10);
-            ShowArray(array, true);
+
+            //int num = 6;
+            //var array = GetArrayFromConsole(ref num);
+            //ShowArray(array, true);
 
             Console.ReadKey();
         }
+
 
         static void ShowArray(int[] arr, bool needsort = false)  // Выводим массив на экран , если нужно сортирует
         {
@@ -25,7 +28,14 @@ namespace Modul5
             }
         }
 
-        static int[] SortArray(int[] arr)                  //  Сотртирует массив 
+        static void SortArray(in int[] arr, out int[] arrasc, out int[] arrdesc)                  //  Сотртирует массив  и по возрастанию и по убыванию
+        {
+            arrasc = SortArrayAsc(arr);
+            arrdesc = SortArrayDesc(arr);
+            
+        }
+
+        static int[] SortArrayAsc(int[] arr)                  //  Сотртирует массив по возрастанию
         {
             int temp;
             for (int i = 0; i < arr.Length; i++)
@@ -44,8 +54,29 @@ namespace Modul5
             return arr;
         }
 
-        static int[] GetArrayFromConsole(int num = 5)      //  Считвает массив с консоли
+        static int[] SortArrayDesc(int[] arr)                  //  Сотртирует массив по убыанию
         {
+            int temp;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int k = 0; k < arr.Length; k++)
+                {
+                    if (arr[i] > arr[k])
+                    {
+                        temp = arr[i];
+                        arr[i] = arr[k];
+                        arr[k] = temp;
+                    }
+                }
+            }
+
+            return arr;
+        }
+
+
+        static int[] GetArrayFromConsole(ref int num )      //  Считвает массив с консоли
+        {
+            //num = 6;
             var result = new int[num];
 
             for (int i = 0; i < result.Length; i++)
