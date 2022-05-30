@@ -4,197 +4,126 @@ namespace Modul5
 {
     class Program
     {
+        // ============== Итоговое по модулю 5
         static void Main(string[] args)
         {
+            // кортеж, который потом копипастить. ррррр
+            //(string Name, string LastName, int Age, string[] NamePet,  string[] FavColor) User;
 
-            Console.WriteLine(PowerUp(2, 3));
+            var User = InputUser();
+
+            OutputUser(User);
 
             Console.ReadKey();
         }
 
-        private static int PowerUp(int N, byte pow)
+
+//  ===================  метод ввода юзера
+        static (string Name, string LastName, int Age, string[] NamePet, string[] FavColor) InputUser()
         {
-            if (pow == 0)
-            {
-                return 1;
-            }
-            else if (pow == 1)
-            {
-                return N;
-            }
+            (string Name, string LastName, int Age, string[] NamePet, string[] FavColor) User;
+            string ls;
+            int li;
 
-            int temp;
-            temp = N * N;
-            --pow;
-            if (pow > 1)
-            {
-                temp = PowerUp(temp, pow);
-            }
+            Console.WriteLine("Введите имя");
+            User.Name = Console.ReadLine();
 
-            return temp;
-        }
+            Console.WriteLine("Введите фамилию");
+            User.LastName = Console.ReadLine();
 
-        static decimal Factorial(int x)
-        {
-            if (x == 0)
+            Console.WriteLine("Введите Ваш возраст");
+            do
             {
-                return 1;
+                ls = Console.ReadLine();
+            } while ( ! IsCorrectNumb(ls, out li));
+            User.Age = li;
+            
+            Console.WriteLine("Есть ли у вас питомцы? Да или Нет");
+            if (Console.ReadLine() == "Да")
+            {
+                do
+                {
+                    Console.WriteLine("Введите кол-во Ваших питомцев");
+                    ls = Console.ReadLine();
+                } while ( ! IsCorrectNumb(ls, out li));
+
+                User.NamePet = InputPetName(li);
             }
             else
             {
-                return x * Factorial(x - 1);
+                User.NamePet = Array.Empty<string>();
             }
+
+            do
+            {
+                Console.WriteLine("Введите кол-во Ваших любимых цветов");
+                ls = Console.ReadLine();
+            } while (!IsCorrectNumb(ls, out li));
+            User.FavColor = InputFavColors(li);
+
+            return User;
         }
 
-        static void Echo(string saidworld, int deep)
+        //  ======================= метод вывода кортеджа юзера            
+        static void OutputUser((string Name, string LastName, int Age, string[] NamePet, string[] FavColor) User)
         {
-            var modif = saidworld;
-            if (modif.Length > 2)
+            Console.WriteLine("Ваше имя {0} \nВаша фамилия {1} \nВаш возраст {2}", User.Name, User.LastName, User.Age);
+
+            Console.WriteLine("Имена Ваших питомцев ");
+            foreach(var larr in User.NamePet)
             {
-                modif = modif.Remove(0, 2);
+                Console.WriteLine(larr);
             }
 
-            Console.BackgroundColor = (ConsoleColor)deep;
-            Console.WriteLine("..." + modif);
-             
-            if (deep > 1)
+            Console.WriteLine("Ваши любимые цвета");
+            foreach (var larr in User.FavColor)
             {
-                Echo(modif, deep - 1);
+                Console.WriteLine(larr);
             }
+
         }
 
-        static void ShowArray(int[] arr, bool needsort = false)  // Выводим массив на экран , если нужно сортирует
+        //  ===================== метод ввода любымых цветов
+        static string[] InputFavColors(int ColorCount)
         {
-            if(needsort)
-            {
-               // arr = SortArray(arr);
-            }
-
-            foreach (int item in arr)
-            {
-                Console.Write(item + " ");
-            }
-        }
-
-        static void SortArray(in int[] arr, out int[] arrasc, out int[] arrdesc)       //  Сотртирует массив  и по возрастанию и по убыванию
-        {
-            arrasc = SortArrayAsc(arr);
-            arrdesc = SortArrayDesc(arr);
+            string[] lsa = new string[ColorCount];
             
+            for (int i = 0; i < ColorCount; i++)
+            {
+                Console.WriteLine("Введите Ваш любымый цвет ");
+                lsa[i] = Console.ReadLine();
+            }
+            return lsa;
         }
 
-        static int[] SortArrayAsc(int[] arr)                  //  Сотртирует массив по возрастанию
+        //  ====================== метод ввода кличек питомцев, по кол-ву питомцев
+        static string[] InputPetName(int PetCount)
         {
-            int temp;
-            for (int i = 0; i < arr.Length; i++)
+            string[] lsa = new string[PetCount];
+            for(int i = 0; i < PetCount; i++)
             {
-                for (int k = 0; k < arr.Length; k++)
+                Console.WriteLine("Введите имя питомца ");
+                lsa[i] = Console.ReadLine();
+            }
+            return lsa;
+        }
+
+        //  ======================= метод проверки численных показателей
+        static bool IsCorrectNumb(string arg, out int Numb)
+        {
+            if (int.TryParse(arg, out int li))
+            {
+                if (li > 0 )
                 {
-                    if (arr[i] < arr[k])
-                    {
-                        temp = arr[i];
-                        arr[i] = arr[k];
-                        arr[k] = temp;
-                    }
+                    Numb = li;
+                    return true;
                 }
             }
 
-            return arr;
+            Console.WriteLine("Введённое значение не является целым положительными числом!");
+            Numb = -1;
+            return false;
         }
-
-        static int[] SortArrayDesc(int[] arr)                  //  Сотртирует массив по убыанию
-        {
-            int temp;
-            for (int i = 0; i < arr.Length; i++)
-            {
-                for (int k = 0; k < arr.Length; k++)
-                {
-                    if (arr[i] > arr[k])
-                    {
-                        temp = arr[i];
-                        arr[i] = arr[k];
-                        arr[k] = temp;
-                    }
-                }
-            }
-
-            return arr;
-        }
-
-        static int[] GetArrayFromConsole(ref int num )      //  Считвает массив с консоли
-        {
-            //num = 6;
-            var result = new int[num];
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                Console.WriteLine("Введите элемент массива номер {0}", i + 1);
-                result[i] = int.Parse(Console.ReadLine());
-            }
-
-            return result;
-        }
-
-        static void SortComplexArray(int[,] arr)
-        {
-            int temp;
-            for (int i = 0; i <= arr.GetUpperBound(0); i++)
-            {
-                for (int j = 0; j <= arr.GetUpperBound(1); j++)
-                    for (int k = j + 1; k <= arr.GetUpperBound(1); k++)
-                        if (arr[i, j] > arr[i, k])
-                        {
-                            temp = arr[i, k];
-                            arr[i, k] = arr[i, j];
-                            arr[i, j] = temp;
-                        }
-            }
-        }       //  Сортитовка двумерного массива
-
-        static void ShowColors(string username = "Jane", params string[] favcolors)  // Выдает цвета через  через перебор forech
-        {
-            Console.WriteLine("Ваши любимые цвета:");
-            foreach (var color in favcolors)
-            {
-                Console.WriteLine(color);
-            }
-        }
-
-        static string ShowColor( string username, int userage)  // Выдает цвета через  через switch
-        {
-            Console.WriteLine("{0}, {1} лет \nНапишите свой любимый цвет на английском с маленькой буквы", username, userage);
-            var color = Console.ReadLine();
-
-            switch (color)
-            {
-                case "red":
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.ForegroundColor = ConsoleColor.Black;
-
-                    Console.WriteLine("Your color is red!");
-                    break;
-
-                case "green":
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    Console.ForegroundColor = ConsoleColor.Black;
-
-                    Console.WriteLine("Your color is green!");
-                    break;
-                case "cyan":
-                    Console.BackgroundColor = ConsoleColor.Cyan;
-                    Console.ForegroundColor = ConsoleColor.Black;
-
-                    Console.WriteLine("Your color is cyan!");
-                    break;
-                default:
-                    Console.BackgroundColor = ConsoleColor.Yellow;
-                    Console.ForegroundColor = ConsoleColor.Red;
-
-                    Console.WriteLine("Your color is yellow!");
-                    break;
-            }       // Разбор по цвету с выдачей на экран
-            return color;
-        }      
 
     }
 }
